@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #fff, #ffe4ec, #ffc0cb);
+    font-family: sans-serif;
+}
+
+/* НАВИГАЦИЯ */
+.nav {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    gap: 8px;
+    z-index: 1000;
+}
+.nav span {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #ffc0cb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* ЭКРАНЫ */
+.screen1, .screen2, .screen3, .screen4, .screen5 {
+    display: none;
+}
+.screen1 { display: block; height: 100vh; position: relative; }
+.screen2, .screen3, .screen4, .screen5 {
+    text-align: center;
+    padding-bottom: 80px;
+}
+
+/* ЗАГОЛОВОК */
+.title {
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8vw;
+    text-align: center;
+    color: #c2185b;
+    font-family: 'Marck Script', cursive;
+}
+
+/* ФОТО */
+.photo {
+    width: 80%;
+    max-width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.photo:active {
+    transform: translate(-50%, -50%) scale(0.97);
+}
+
+/* ПОДСКАЗКА */
+.hint {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Marck Script', cursive;
+    color: #c2185b;
+    font-size: 18px;
+}
+
+/* ВИДЕО */
+.video {
+    width: 90%;
+    max-width: 700px;
+    border-radius: 20px;
+    margin-top: 60px;
+}
+
+/* СЕРДЕЧКО */
+.heart-btn {
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    margin-top: 25px;
+    animation: pulse 1.5s infinite;
+}
+
+/* КОЛЛАЖ */
+.collage {
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    margin-top: 50px;
+}
+
+/* ТЕКСТ */
+.story {
+    max-width: 700px;
+    margin: 30px auto;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    padding: 0 15px;
+}
+
+/* ПИСЬМО */
+.letter {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 25px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    font-family: 'Marck Script', cursive;
+    font-size: 20px;
+    color: #c2185b;
+    line-height: 1.8;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+/* ПАРОЛЬ */
+.password-screen {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffc0cb, #ffe4ec);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+.password-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    width: 260px;
+}
+
+/* ЛОАДЕР */
+.loader {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffc0cb, #ffe4ec);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+.gift {
+    font-size: 70px;
+    cursor: pointer;
+    animation: pulse 1.5s infinite;
+}
+
+/* АНИМАЦИИ */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="password-screen" id="passwordScreen">
+    <div class="password-box">
+        <div class="title">Введите пароль 🤍</div>
+        <input type="password" id="passwordInput">
+        <button onclick="checkPassword()">Открыть</button>
+        <div id="errorText"></div>
+    </div>
+</div>
+
+<div class="loader" id="loader" style="display:none;">
+    <div class="gift" onclick="openGift()">🎁</div>
+</div>
+
+<div class="nav" id="nav">
+    <span onclick="showScreen(1)">1</span>
+<span onclick="showScreen(2)">2</span>
+    <span onclick="showScreen(3)">3</span>
+    <span onclick="showScreen(4)">4</span>
+    <span onclick="showScreen(5)">5</span>
+</div>
+
+<div class="screen1">
+    <h1 class="title">Моей любимой Аялге 🤍</h1>
+    <img src="photo.jpg" class="photo" onclick="showScreen(2)">
+    <div class="hint">нажми на фото 🤍</div>
+</div>
+
+<div class="screen2">
+    <video class="video" controls muted>
+        <source src="video.mp4">
+    </video>
+    <div class="story" id="text2"></div>
+    <div class="heart-btn" onclick="showScreen(3)">🤍</div>
+</div>
+
+<div class="screen3">
+    <img src="collage.jpg" class="collage">
+    <div class="story" id="text3"></div>
+    <div class="heart-btn" onclick="showScreen(4)">🤍</div>
+</div>
+
+<!-- СТРАНИЦА 4 С ПЕЧАТЬЮ -->
+<div class="screen4">
+    <div class="letter" id="text4"></div>
+    <div class="heart-btn" onclick="showScreen(5)">🤍</div>
+</div>
+
+<div class="screen5">
+    <img src="final.jpg" class="collage">
+    <div class="story">
+        Надеюсь, тебе понравилось 🤍🤍🤍<br><br>
+        Люблю бесконечно
+    </div>
+</div>
+
+<script>
+const correctPassword = "271225";
+
+let typed2 = false;
+let typed3 = false;
+let typed4 = false;
+
+function checkPassword() {
+    let input = document.getElementById("passwordInput").value;
+    if (input === correctPassword) {
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("loader").style.display = "flex";
+    } else {
+        document.getElementById("errorText").innerText = "Неверный пароль";
+    }
+}
+
+function openGift() {
+    let loader = document.getElementById("loader");
+    loader.classList.add("fade-out");
+
+    setTimeout(() => {
+        loader.style.display = "none";
+        document.getElementById("nav").style.display = "flex";
+    }, 1000);
+}
+
+function showScreen(num) {
+    document.querySelectorAll('.screen1, .screen2, .screen3, .screen4, .screen5')
+        .forEach(el => el.style.display = 'none');
+
+    document.querySelector('.screen' + num).style.display = 'block';
+
+    if (num === 2 && !typed2) {
+        typeText("text2", text2);
+        typed2 = true;
+    }
+    if (num === 3 && !typed3) {
+        typeText("text3", text3);
+        typed3 = true;
+    }
+    if (num === 4 && !typed4) {
+        typeText("text4", text4);
+        typed4 = true;
+    }
+}
+
+const text2 = `Зверополис 2, я выбрал именно этот мульфильм, потому что
+он играет в нашей истории важную роль, я впервые пошел с тобой в кинотеатр
+Этот момент с Ником многое для меня значит 🤍`;
+
+const text3 = `Спасибо тебе, что появилась в моей жизни.
+
+Ты мой свет 🥰`;
+
+const text4 = `Как ты знаешь, я тебя очень сильно люблю и дорожу тобой.
+
+Каждое мгновение проведенное с тобой это радость, счастье.
+
+Впереди нас ждет ЕГЭ, поступление, выпускной. После я уеду и я хотел бы сказать, что расстояние — это лишь одно из испытаний, которое нам предстоит пройти.
+
+Вступая в новый этап жизни, я хочу быть только с тобой.
+
+Ты наполняешь мою жизнь яркими красками и счастьем.
+
+Я верю, что ты моя судьба и мы будем вместе до самого конца.
+
+Люди говорят, что мы торопимся… но это не важно.
+
+Потому что то, что между нами — это нечто нереальное 🤍`;
+
+function typeText(id, text) {
+    let el = document.getElementById(id);
+    el.innerHTML = "";
+    let i = 0;
+
+    function typing() {
+        if (i < text.length) {
+            el.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+            i++;
+            setTimeout(typing, 35);
+        }
+    }
+    typing();
+}
+
+document.getElementById("passwordInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") checkPassword();
+});
+</script>
+
+</body>
+</html>
